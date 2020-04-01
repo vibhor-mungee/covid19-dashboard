@@ -5,7 +5,6 @@ import GoogleMapReact from 'google-map-react';
 import request from 'request';
 import Popover from '@material-ui/core/Popover';
 import Country from './selectedcountry';
-
 import location_mark from '../image/iconfinder_gpsmapicons01_68004.png';
 
 function Index() {
@@ -32,11 +31,10 @@ function Index() {
       }
     }
   }`
-  const [reportByCountry, { called, loading, data }] = useLazyQuery(COVID_19_DATA,{ variables: { country: countryName } });
-  console.log('data>>',called, loading,data);
+  const [reportByCountry, { data }] = useLazyQuery(COVID_19_DATA,{ variables: { country: countryName } });
   
-  const getCountryNameByLatLng= async(key,lat,lng)=>{
-    countryNameByLatLng(null);
+  const getCountryNameByLatLng= async(lat,lng)=>{
+    // countryNameByLatLng(null)
     const latLongArray=[];
     await latLongArray.push({lat,lng})
     // setLatLng(latLongArray);
@@ -49,14 +47,13 @@ function Index() {
       }
       const solve = JSON.parse(body);
       if (solve && solve.results.length > 0) {
-        console.log('inside solve if');
         const getNameArray = solve.results[0].formatted_address.split(',');
         countryNameByLatLng(getNameArray[getNameArray.length - 1].trim());
       }
     }
     );
   }
-  const hndlOpenPopover=(value)=>{
+  const hndlOpenPopover=()=>{
     reportByCountry();
     setOpenPopup(true);
   }
@@ -86,13 +83,14 @@ function Index() {
 }
   </div>;
     return (
-        <div style={{ height: '100vh', width: '70%', float: 'right' }}>
+        <div style={{ height: '100vh', width: '100%' }}>
+          {/* style={{ height: '100vh', width: '70%', float: 'right' }} */}
         <GoogleMapReact
           bootstrapURLKeys={{ key: 'AIzaSyDL9qOq_Qr4kFCE651q5v5UfYGDmEEX5Oo' }}
           defaultCenter={{lat: 20, lng: 77}}
           defaultZoom={5}
           hoverDistance={40 / 2}
-          onChildClick={(key,{lat,lng})=>getCountryNameByLatLng(key,lat,lng)}
+          onChildClick={(key,{lat,lng})=>getCountryNameByLatLng(lat,lng)}
           // onClick={({lat,lng})=>getCountryNameByLatLng(lat,lng)}
         >
           {Country.map((countryData)=>(

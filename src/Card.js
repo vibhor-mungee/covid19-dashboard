@@ -7,6 +7,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 // import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles({
     root: {
@@ -25,19 +26,42 @@ const useStyles = makeStyles({
     },
 });
 
-function CardLayout() {
+function CardLayout({title,dataReport}) {
+    const colorStyle=()=>{
+        if(title==='CASES'){
+            return(
+                <div style={{color:'red'}}>
+                    {dataReport}
+                </div>
+            )
+        } 
+        if(title==='DEATHS'){
+            return(
+                <div style={{color:'darkred'}}>
+                    {dataReport}
+                </div>
+            )
+        }
+        if(title==='RECOVERED'){
+            return(
+                <div style={{color:'green'}}>
+                    {dataReport}
+                </div>
+            )
+        }
+    }
     const classes = useStyles();
     return (
-        <Card className={classes.root}>
-            <CardContent>
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    Word of the Day
-                </Typography>
-            </CardContent>
-            {/* <CardActions>
-                <Button size="small">Learn More</Button>
-            </CardActions> */}
-        </Card>
+        <Grid  item xs={4}>
+            <Card className={classes.root}>
+                <CardContent>
+                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                        {title}
+                    </Typography>
+                    {colorStyle()}
+                </CardContent>
+            </Card>
+        </Grid>
     );
 }
 

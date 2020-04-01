@@ -1,6 +1,6 @@
 import React from 'react';
-import Dashboard from './Dashboard';
-import Map from './Map/index';
+import Dashboard from './Dashboard/index';
+import Map from './Map';
 import './App.css';
 
 function App() {
