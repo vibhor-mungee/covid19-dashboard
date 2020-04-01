@@ -1,18 +1,20 @@
 import React,{useState} from 'react';
-import { useLazyQuery } from '@apollo/react-hooks';
+import { useLazyQuery,useQuery } from '@apollo/react-hooks';
 import gql from "graphql-tag";
 import GoogleMapReact from 'google-map-react';
 import request from 'request';
 import { UncontrolledPopover, PopoverHeader, PopoverBody } from 'reactstrap';
 import './App.css';
+import Country from './selectedcountry';
 
 import location_mark from './image/iconfinder_gpsmapicons01_68004.png';
 
 function App() {
   // const date = new Date();
   // const dateFormate= `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()-1}`
-  const[latLong,setLatLng]=useState([{lat:'20',lng:'77'}]);
+  // const[latLong,setLatLng]=useState([{lat:'20',lng:'77'}]);
   const[countryName,countryNameByLatLng]=useState('India');
+  const[countryKey,setCountryKey]= useState(null);
 
   const COVID_19_DATA = gql`
   query($country:String!){
@@ -35,11 +37,14 @@ function App() {
       }
     }
   }`
-  const [reportByCountry, { called, loading, data }] = useLazyQuery(COVID_19_DATA,{ variables: { country: countryName } });
-  const getCountryNameByLatLng= async(lat,lng)=>{
+  const data = useQuery(COVID_19_DATA,{ variables: { country: countryName } });
+  // console.log(data)
+  console.log('countryName>>',countryName)
+  const getCountryNameByLatLng= async(key,lat,lng)=>{
+    setCountryKey(key)
     const latLongArray=[];
     await latLongArray.push({lat,lng})
-    setLatLng(latLongArray);
+    // setLatLng(latLongArray);
     await request({
           url: `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyDL9qOq_Qr4kFCE651q5v5UfYGDmEEX5Oo`,
           method: 'get',
@@ -54,18 +59,18 @@ function App() {
           }
       }
       );
-      reportByCountry();
+      // reportByCountry();
   }
-  const AnyReactComponent = () => <div>
-      <img width={35} src={location_mark} alt="mark" id="UncontrolledPopover"/>
-      {console.log(called, loading,'data>>',data)}
-      {called &&data && data.ReportByCountry &&data.ReportByCountry.country[0]===countryName &&
+  const AnyReactComponent = () =>
+    <div id="UncontrolledPopover">
+      <img width={35} src={location_mark} alt="mark"/>
+      {data && data.data &&data.data.ReportByCountry &&
         <UncontrolledPopover placement="bottom" target="UncontrolledPopover">
         <PopoverHeader>COVID19</PopoverHeader>
         <PopoverBody>
           <div>
-            <h6>Confirmed: {data.ReportByCountry.active_cases[0].currently_infected_patients}</h6>
-            <h6>Deaths: {data.ReportByCountry.closed_cases[0].deaths}</h6>
+            <h6>Confirmed: {data.data.ReportByCountry.cases}</h6>
+            <h6>Deaths: {data.data.ReportByCountry.deaths}</h6>
           </div>
         </PopoverBody>
       </UncontrolledPopover>
@@ -77,12 +82,17 @@ function App() {
           bootstrapURLKeys={{ key: 'AIzaSyDL9qOq_Qr4kFCE651q5v5UfYGDmEEX5Oo' }}
           defaultCenter={{lat: 20, lng: 77}}
           defaultZoom={5}
-          onClick={({lat,lng})=>getCountryNameByLatLng(lat,lng)}
+          hoverDistance={40 / 2}
+          onChildClick={(key,{lat,lng})=>getCountryNameByLatLng(key,lat,lng)}
+          // onClick={({lat,lng})=>getCountryNameByLatLng(lat,lng)}
         >
-          <AnyReactComponent
-            lat={latLong &&latLong.length>0 && latLong[0].lat}
-            lng={latLong &&latLong.length>0 && latLong[0].lng}
+          {Country.map((countryData)=>(
+            <AnyReactComponent
+            key={countryData.id}
+            lat={countryData.latlng[0]}
+            lng={countryData.latlng[1]}
           />
+          ))}
         </GoogleMapReact>
     </div>
   );
