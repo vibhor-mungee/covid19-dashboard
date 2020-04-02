@@ -1,4 +1,4 @@
-import React,{ useState,useEffect } from 'react'
+import React,{ useState } from 'react'
 import { useLazyQuery } from '@apollo/react-hooks';
 import gql from "graphql-tag";
 import GoogleMapReact from 'google-map-react';
@@ -41,8 +41,7 @@ function Index() {
   //   }
   // },[countryName,openPopup,data])
   const getCountryNameByLatLng= async(lat,lng)=>{
-    console.log('getCountryNameByLatLng>>');
-    // countryNameByLatLng(null)
+    countryNameByLatLng(null)
     await request({
       url: `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyDL9qOq_Qr4kFCE651q5v5UfYGDmEEX5Oo`,
       method: 'get',
@@ -66,8 +65,8 @@ function Index() {
   const hndlClosePopover=()=>{
     setOpenPopup(false);
   }
-  const AnyReactComponent = () => <div className="pop_div">
-  <span className="map-pin" ><img width={35} src={location_mark} alt="mark" onMouseEnter={hndlOpenPopover}/></span>
+  const AnyReactComponent = () => <div className="pop_div" onMouseEnter={hndlOpenPopover}>
+  <div className="map-pin" ><img width={35} src={location_mark} alt="mark"/></div>
   {data && data.ReportByCountry &&
     <Popover
     className="pop-up"
@@ -91,7 +90,6 @@ function Index() {
           <img width={25} src={data.ReportByCountry.flag} alt={data.ReportByCountry.country[0]} />
         </div>
         <div className="pop-data">
-
         <h6 className="confirmed">Confirmed: <span>{data.ReportByCountry.cases}</span></h6>
         <h6 className="recovered">Recovered: <span>{data.ReportByCountry.recovered}</span></h6>
         <h6 className="deaths">Deaths: <span>{data.ReportByCountry.deaths}</span></h6>
@@ -106,17 +104,17 @@ function Index() {
             bootstrapURLKeys={{ key: 'AIzaSyDL9qOq_Qr4kFCE651q5v5UfYGDmEEX5Oo' }}
             defaultCenter={{lat: 20, lng: 77}}
             defaultZoom={5}
-            hoverDistance={40 / 2}
+            hoverDistance={60}
             // onChildClick={(key,{lat,lng})=>getCountryNameByLatLng(lat,lng)}
             onChildMouseEnter={(key,{lat,lng})=>getCountryNameByLatLng(lat,lng)}
             // onChildMouseLeave={()=>countryNameByLatLng(null)}
-            // onClick={({lat,lng})=>getCountryNameByLatLng(lat,lng)}
           >
             {Country.map((countryData)=>(
               <AnyReactComponent
               key={countryData.id}
               lat={countryData.latlng[0]}
               lng={countryData.latlng[1]}
+              countryName={countryData.name}
             />
             ))}
           </GoogleMapReact>
