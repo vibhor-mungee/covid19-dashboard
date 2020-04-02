@@ -99,3 +99,14 @@
   font-size: 24px;
   font-weight: 700;
 }
+.map-pin{
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  background-color: #ed2124a8;
+  border: solid 1px #da0a0d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
