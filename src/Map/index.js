@@ -34,7 +34,7 @@ function Index() {
   const [reportByCountry, { data }] = useLazyQuery(COVID_19_DATA,{ variables: { country: countryName } });
   
   const getCountryNameByLatLng= async(lat,lng)=>{
-    // countryNameByLatLng(null)
+    countryNameByLatLng(null)
     const latLongArray=[];
     await latLongArray.push({lat,lng})
     // setLatLng(latLongArray);
@@ -84,23 +84,22 @@ function Index() {
   </div>;
     return (
         <div style={{ height: '100vh', width: '100%' }}>
-          {/* style={{ height: '100vh', width: '70%', float: 'right' }} */}
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: 'AIzaSyDL9qOq_Qr4kFCE651q5v5UfYGDmEEX5Oo' }}
-          defaultCenter={{lat: 20, lng: 77}}
-          defaultZoom={5}
-          hoverDistance={40 / 2}
-          onChildClick={(key,{lat,lng})=>getCountryNameByLatLng(lat,lng)}
-          // onClick={({lat,lng})=>getCountryNameByLatLng(lat,lng)}
-        >
-          {Country.map((countryData)=>(
-            <AnyReactComponent
-            key={countryData.id}
-            lat={countryData.latlng[0]}
-            lng={countryData.latlng[1]}
-          />
-          ))}
-        </GoogleMapReact>
+          <GoogleMapReact
+            bootstrapURLKeys={{ key: 'AIzaSyDL9qOq_Qr4kFCE651q5v5UfYGDmEEX5Oo' }}
+            defaultCenter={{lat: 20, lng: 77}}
+            defaultZoom={5}
+            hoverDistance={40 / 2}
+            onChildClick={(key,{lat,lng})=>getCountryNameByLatLng(lat,lng)}
+            // onClick={({lat,lng})=>getCountryNameByLatLng(lat,lng)}
+          >
+            {Country.map((countryData)=>(
+              <AnyReactComponent
+              key={countryData.id}
+              lat={countryData.latlng[0]}
+              lng={countryData.latlng[1]}
+            />
+            ))}
+          </GoogleMapReact>
       </div>
     )
 }

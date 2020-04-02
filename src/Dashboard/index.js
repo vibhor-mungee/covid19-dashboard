@@ -14,7 +14,8 @@ const Index = () => {
             }
         }`
   const {data} = useQuery(REPORT_QUERY);
-
+    // console.log('data>>',data);
+    
   if(data){
     delete data.reports.__typename;
   }
