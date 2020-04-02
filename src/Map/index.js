@@ -1,4 +1,4 @@
-import React,{ useState } from 'react'
+import React,{ useState,useEffect } from 'react'
 import { useLazyQuery } from '@apollo/react-hooks';
 import gql from "graphql-tag";
 import GoogleMapReact from 'google-map-react';
@@ -8,7 +8,7 @@ import Country from './selectedcountry';
 import location_mark from '../image/map.svg';
 
 function Index() {
-    const[countryName,countryNameByLatLng]= useState('India');
+  const[countryName,countryNameByLatLng]= useState('India');
   const [openPopup,setOpenPopup]= useState(false);
   const [anchorEl,setAnchorEl]= useState(null);
   const COVID_19_DATA = gql`
@@ -33,8 +33,16 @@ function Index() {
     }
   }`
   const [reportByCountry, { data }] = useLazyQuery(COVID_19_DATA,{ variables: { country: countryName } });
-  
+  // useEffect(()=>{
+  //   if(countryName &&openPopup && data){
+  //     console.log('inside useeffect>>',countryName);
+      
+  //     countryNameByLatLng(null)
+  //   }
+  // },[countryName,openPopup,data])
   const getCountryNameByLatLng= async(lat,lng)=>{
+    console.log('getCountryNameByLatLng>>');
+    
     countryNameByLatLng(null)
     await request({
       url: `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyDL9qOq_Qr4kFCE651q5v5UfYGDmEEX5Oo`,
