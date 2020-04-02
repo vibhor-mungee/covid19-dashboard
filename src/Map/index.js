@@ -36,9 +36,6 @@ function Index() {
   
   const getCountryNameByLatLng= async(lat,lng)=>{
     countryNameByLatLng(null)
-    const latLongArray=[];
-    await latLongArray.push({lat,lng})
-    // setLatLng(latLongArray);
     await request({
       url: `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyDL9qOq_Qr4kFCE651q5v5UfYGDmEEX5Oo`,
       method: 'get',
@@ -70,11 +67,11 @@ function Index() {
       onClose={hndlClosePopover}
       // anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: 'center',
+        vertical: 'bottom',
         horizontal: 'center',
       }}
       transformOrigin={{
-        vertical: 'top',
+        vertical: 'bottom',
         horizontal: 'center',
       }}
 >
