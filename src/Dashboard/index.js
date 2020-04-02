@@ -20,7 +20,7 @@ const Index = () => {
     delete data.reports.__typename;
   }
     return (
-        <div style={{padding:'20px'}}>
+        <div className="dashboard-card">
             <Grid container spacing={1} style={{textAlign:'center'}}>
     {data&&data.reports &&Object.keys(data.reports).map(name=>
         <CardLayout key={name} title={name.toLocaleUpperCase()} dataReport={data.reports[name]}/>

@@ -30,23 +30,23 @@ function CardLayout({title,dataReport}) {
     const colorStyle=()=>{
         if(title==='CASES'){
             return(
-                <div style={{color:'red'}}>
+                <h4 style={{color:'#fb756f'}}>
                     {dataReport}
-                </div>
+                </h4>
             )
         } 
         if(title==='DEATHS'){
             return(
-                <div style={{color:'darkred'}}>
+                <h4 style={{color:'crimson'}}>
                     {dataReport}
-                </div>
+                </h4>
             )
         }
         if(title==='RECOVERED'){
             return(
-                <div style={{color:'green'}}>
+                <h4  style={{color:'forestgreen'}}>
                     {dataReport}
-                </div>
+                </h4>
             )
         }
     }
