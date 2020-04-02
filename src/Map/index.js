@@ -10,6 +10,7 @@ import location_mark from '../image/iconfinder_gpsmapicons01_68004.png';
 function Index() {
     const[countryName,countryNameByLatLng]= useState('India');
   const [openPopup,setOpenPopup]= useState(false);
+  const [anchorEl,setAnchorEl]= useState(null);
   const COVID_19_DATA = gql`
   query($country:String!){
     ReportByCountry(country:$country) {
@@ -53,7 +54,8 @@ function Index() {
     }
     );
   }
-  const hndlOpenPopover=()=>{
+  const hndlOpenPopover=(e)=>{
+    setAnchorEl(anchorEl?null:e.currentTarget)
     reportByCountry();
     setOpenPopup(true);
   }
@@ -61,13 +63,14 @@ function Index() {
     setOpenPopup(false);
   }
   const AnyReactComponent = () => <div>
-  <img width={35} src={location_mark} alt="mark" id="UncontrolledPopover" onClick={hndlOpenPopover}/>
+  <img width={35} src={location_mark} alt="mark" onClick={hndlOpenPopover}/>
   {data && data.ReportByCountry &&
     <Popover
       open={openPopup}
       onClose={hndlClosePopover}
+      // anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: 'bottom',
+        vertical: 'center',
         horizontal: 'center',
       }}
       transformOrigin={{
@@ -82,6 +85,7 @@ function Index() {
           </h6>
         <hr/>
         <h6>Confirmed: {data.ReportByCountry.cases}</h6>
+        <h6>Recovered: {data.ReportByCountry.recovered}</h6>
         <h6>Deaths: {data.ReportByCountry.deaths}</h6>
       </div>
 </Popover>
