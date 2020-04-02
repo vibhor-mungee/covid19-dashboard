@@ -5,7 +5,7 @@ import GoogleMapReact from 'google-map-react';
 import request from 'request';
 import Popover from '@material-ui/core/Popover';
 import Country from './selectedcountry';
-import location_mark from '../image/iconfinder_gpsmapicons01_68004.png';
+import location_mark from '../image/map.svg';
 
 function Index() {
     const[countryName,countryNameByLatLng]= useState('India');
@@ -59,10 +59,11 @@ function Index() {
   const hndlClosePopover=()=>{
     setOpenPopup(false);
   }
-  const AnyReactComponent = () => <div>
-  <img width={35} src={location_mark} alt="mark" onClick={hndlOpenPopover}/>
+  const AnyReactComponent = () => <div className="pop_div">
+  <img width={40} src={location_mark} alt="mark" onClick={hndlOpenPopover}/>
   {data && data.ReportByCountry &&
     <Popover
+    className="pop-up"
       open={openPopup}
       onClose={hndlClosePopover}
       // anchorEl={anchorEl}
@@ -76,14 +77,18 @@ function Index() {
       }}
 >
     <div>
-        <h6>
-          {data.ReportByCountry.country[0]}
-          <img width={25} src={data.ReportByCountry.flag} alt={data.ReportByCountry.country[0]} />
+        <div className="pop-header">
+        <h6 className="country">
+          <span>{data.ReportByCountry.country[0]}</span>
           </h6>
-        <hr/>
-        <h6>Confirmed: {data.ReportByCountry.cases}</h6>
-        <h6>Recovered: {data.ReportByCountry.recovered}</h6>
-        <h6>Deaths: {data.ReportByCountry.deaths}</h6>
+          <img width={25} src={data.ReportByCountry.flag} alt={data.ReportByCountry.country[0]} />
+        </div>
+        <div className="pop-data">
+
+        <h6 className="confirmed">Confirmed: <span>{data.ReportByCountry.cases}</span></h6>
+        <h6 className="recovered">Recovered: <span>{data.ReportByCountry.recovered}</span></h6>
+        <h6 className="deaths">Deaths: <span>{data.ReportByCountry.deaths}</span></h6>
+        </div>
       </div>
 </Popover>
 }

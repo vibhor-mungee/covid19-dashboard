@@ -36,3 +36,66 @@
     transform: rotate(360deg);
   }
 }
+
+.pop-up .MuiPopover-paper{   
+  /* padding: 30px;; */
+  background-color: #fff;
+    background-clip: padding-box;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 3px 6px -4px rgba(0,0,0,.12), 0 6px 16px 0 rgba(0,0,0,.08), 0 9px 28px 8px rgba(0,0,0,.05);
+    box-shadow: 0 3px 6px -4px rgba(0,0,0,.12), 0 6px 16px 0 rgba(0,0,0,.08), 0 9px 28px 8px rgba(0,0,0,.05);
+    -webkit-box-shadow: 0 0 8px rgba(0,0,0,.15) \9;
+    box-shadow: 0 0 8px rgba(0,0,0,.15) \9;
+    box-shadow: none;
+    min-width: 300px;
+    border-radius: 6px;
+}
+.pop-header{
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed #c7c7c7;
+}
+.country {
+  font-size: 18px;
+  margin-bottom: 0;
+}
+.pop-data{
+  padding: 20px 30px;
+}
+.pop-data h6{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0;
+  padding: 10px 0;
+  font-size: 14px;
+}
+.pop-data .confirmed{
+ color: lightcoral;
+}
+.pop-data .recovered{
+  color: forestgreen;
+}
+.pop-data .deaths{
+  color: crimson;
+}
+.dashboard-card{
+  /* background-color: #fff; */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: 800px;
+  z-index: 9;
+}
+.dashboard-card .MuiPaper-rounded{
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.dashboard-card h4{
+  font-size: 24px;
+  font-weight: 700;
+}
