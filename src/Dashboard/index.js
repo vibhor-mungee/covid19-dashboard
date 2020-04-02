@@ -6,7 +6,7 @@ import CardLayout from '../Card';
 
 const Index = () => {
     const REPORT_QUERY = gql`
-        {
+        query{
             reports{
             cases
             deaths
@@ -14,7 +14,6 @@ const Index = () => {
             }
         }`
   const {data} = useQuery(REPORT_QUERY);
-    // console.log('data>>',data);
     
   if(data){
     delete data.reports.__typename;
