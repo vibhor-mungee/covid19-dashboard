@@ -5,7 +5,7 @@ import GoogleMapReact from 'google-map-react';
 import request from 'request';
 import Popover from '@material-ui/core/Popover';
 import Country from './selectedcountry';
-import location_mark from '../image/map.svg';
+import location_mark from '../image/virus.svg';
 
 function Index() {
     const[countryName,countryNameByLatLng]= useState('India');
@@ -63,7 +63,7 @@ function Index() {
     setOpenPopup(false);
   }
   const AnyReactComponent = () => <div className="pop_div">
-  <img width={40} src={location_mark} alt="mark" onClick={hndlOpenPopover}/>
+  <span className="map-pin" ><img width={35} src={location_mark} alt="mark" onClick={hndlOpenPopover}/></span>
   {data && data.ReportByCountry &&
     <Popover
     className="pop-up"
