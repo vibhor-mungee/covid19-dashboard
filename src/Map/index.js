@@ -32,7 +32,7 @@ function Index() {
       }
     }
   }`
-  const [reportByCountry, { data }] = useLazyQuery(COVID_19_DATA,{ variables: { country: countryName } });
+  const [reportByCountry, { data }] = useLazyQuery(COVID_19_DATA,{ variables: { country: countryName&&countryName } });
   // useEffect(()=>{
   //   if(countryName &&openPopup && data){
   //     console.log('inside useeffect>>',countryName);
@@ -42,7 +42,6 @@ function Index() {
   // },[countryName,openPopup,data])
   const getCountryNameByLatLng= async(lat,lng)=>{
     console.log('getCountryNameByLatLng>>');
-    
     countryNameByLatLng(null)
     await request({
       url: `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyDL9qOq_Qr4kFCE651q5v5UfYGDmEEX5Oo`,
@@ -54,7 +53,7 @@ function Index() {
       const solve = JSON.parse(body);
       if (solve && solve.results.length > 0) {
         const getNameArray = solve.results[0].formatted_address.split(',');
-        countryNameByLatLng(getNameArray[getNameArray.length - 1].trim());
+        await countryNameByLatLng(getNameArray[getNameArray.length - 1].trim());
       }
     }
     );
@@ -107,12 +106,14 @@ function Index() {
             bootstrapURLKeys={{ key: 'AIzaSyDL9qOq_Qr4kFCE651q5v5UfYGDmEEX5Oo' }}
             defaultCenter={{lat: 20, lng: 77}}
             defaultZoom={5}
-            hoverDistance={40 / 2}
+            // hoverDistance={40 / 2}
             onChildClick={(key,{lat,lng})=>getCountryNameByLatLng(lat,lng)}
+            onChildMouseEnter={(key,{lat,lng})=>console.log('data>>>',key,',',lat,',',lng)}
             // onClick={({lat,lng})=>getCountryNameByLatLng(lat,lng)}
           >
             {Country.map((countryData)=>(
               <AnyReactComponent
+              width={100}
               key={countryData.id}
               lat={countryData.latlng[0]}
               lng={countryData.latlng[1]}
