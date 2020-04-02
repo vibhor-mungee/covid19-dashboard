@@ -32,7 +32,7 @@ function Index() {
       }
     }
   }`
-  const [reportByCountry, { data }] = useLazyQuery(COVID_19_DATA,{ variables: { country: countryName&&countryName } });
+  const [reportByCountry, { data }] = useLazyQuery(COVID_19_DATA,{ variables: { country: countryName } });
   // useEffect(()=>{
   //   if(countryName &&openPopup && data){
   //     console.log('inside useeffect>>',countryName);
@@ -42,7 +42,7 @@ function Index() {
   // },[countryName,openPopup,data])
   const getCountryNameByLatLng= async(lat,lng)=>{
     console.log('getCountryNameByLatLng>>');
-    countryNameByLatLng(null)
+    // countryNameByLatLng(null)
     await request({
       url: `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyDL9qOq_Qr4kFCE651q5v5UfYGDmEEX5Oo`,
       method: 'get',
@@ -67,7 +67,7 @@ function Index() {
     setOpenPopup(false);
   }
   const AnyReactComponent = () => <div className="pop_div">
-  <span className="map-pin" ><img width={35} src={location_mark} alt="mark" onClick={hndlOpenPopover}/></span>
+  <span className="map-pin" ><img width={35} src={location_mark} alt="mark" onMouseEnter={hndlOpenPopover}/></span>
   {data && data.ReportByCountry &&
     <Popover
     className="pop-up"
@@ -106,14 +106,14 @@ function Index() {
             bootstrapURLKeys={{ key: 'AIzaSyDL9qOq_Qr4kFCE651q5v5UfYGDmEEX5Oo' }}
             defaultCenter={{lat: 20, lng: 77}}
             defaultZoom={5}
-            // hoverDistance={40 / 2}
-            onChildClick={(key,{lat,lng})=>getCountryNameByLatLng(lat,lng)}
-            onChildMouseEnter={(key,{lat,lng})=>console.log('data>>>',key,',',lat,',',lng)}
+            hoverDistance={40 / 2}
+            // onChildClick={(key,{lat,lng})=>getCountryNameByLatLng(lat,lng)}
+            onChildMouseEnter={(key,{lat,lng})=>getCountryNameByLatLng(lat,lng)}
+            // onChildMouseLeave={()=>countryNameByLatLng(null)}
             // onClick={({lat,lng})=>getCountryNameByLatLng(lat,lng)}
           >
             {Country.map((countryData)=>(
               <AnyReactComponent
-              width={100}
               key={countryData.id}
               lat={countryData.latlng[0]}
               lng={countryData.latlng[1]}
