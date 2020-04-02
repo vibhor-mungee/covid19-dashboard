@@ -76,6 +76,11 @@ function Index() {
       }}
 >
     <div>
+        <h6>
+          {data.ReportByCountry.country[0]}
+          <img width={25} src={data.ReportByCountry.flag} alt={data.ReportByCountry.country[0]} />
+          </h6>
+        <hr/>
         <h6>Confirmed: {data.ReportByCountry.cases}</h6>
         <h6>Deaths: {data.ReportByCountry.deaths}</h6>
       </div>
