@@ -34,15 +34,7 @@ function Index() {
     }
   }`
   const [reportByCountry, { data }] = useLazyQuery(COVID_19_DATA,{ variables: { country: countryName } });
-  // useEffect(()=>{
-  //   if(countryName &&openPopup && data){
-  //     console.log('inside useeffect>>',countryName);
-      
-  //     countryNameByLatLng(null)
-  //   }
-  // },[countryName,openPopup,data])
   const getCountryNameByLatLng= async(lat,lng)=>{
-    // countryNameByLatLng(null)
     await request({
       url: `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyDL9qOq_Qr4kFCE651q5v5UfYGDmEEX5Oo`,
       method: 'get',
@@ -69,7 +61,7 @@ function Index() {
   const AnyReactComponent = () => <div className="pop_div" onMouseEnter={hndlOpenPopover}>
   <div className="map-pin" ><img width={35} src={location_mark} alt="mark"/></div>
     <Popover
-    className="pop-up"
+      className="pop-up"
       open={openPopup}
       onClose={hndlClosePopover}
       // anchorEl={anchorEl}
@@ -86,15 +78,15 @@ function Index() {
         <div className="pop-header">
         <h6 className="country">
           <span>{data&&data.ReportByCountry?data.ReportByCountry.country[0]:<Skeleton animation="wave" width={80} />}</span>
-          </h6>
+        </h6>
           {data&&data.ReportByCountry?<img width={25} src={data.ReportByCountry.flag} alt={data.ReportByCountry.country[0]} />:<Skeleton variant="circle" width={45} height={45} />}
         </div>
         <div className="pop-data">
-        <h6 className="confirmed">Confirmed:<span>{data&&data.ReportByCountry?data.ReportByCountry.cases:<Skeleton animation="wave" width={80} />}</span></h6>
-        <h6 className="recovered">Recovered: <span>{data&&data.ReportByCountry?data.ReportByCountry.recovered:<Skeleton animation="wave" width={80} />}</span></h6>
-        <h6 className="deaths">Deaths: <span>{data&&data.ReportByCountry?data.ReportByCountry.deaths:<Skeleton animation="wave" width={80} />}</span></h6>
+          <h6 className="confirmed">Confirmed:<span>{data&&data.ReportByCountry?data.ReportByCountry.cases:<Skeleton animation="wave" width={80} />}</span></h6>
+          <h6 className="recovered">Recovered: <span>{data&&data.ReportByCountry?data.ReportByCountry.recovered:<Skeleton animation="wave" width={80} />}</span></h6>
+          <h6 className="deaths">Deaths: <span>{data&&data.ReportByCountry?data.ReportByCountry.deaths:<Skeleton animation="wave" width={80} />}</span></h6>
         </div>
-      </div>
+    </div>
 </Popover>
   </div>;
     return (
