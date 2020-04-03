@@ -59,13 +59,11 @@ function Index() {
     );
   }
   const hndlOpenPopover = (e) => {
-    console.log('hndlOpenPopover');
     setAnchorEl(anchorEl ? null : e.currentTarget)
     reportByCountry();
     setOpenPopup(true);
   }
   const hndlClosePopover = () => {
-    console.log('hndlClosePopover');
     setOpenPopup(false);
   }
   const AnyReactComponent = () => <div className="pop_div" onMouseEnter={hndlOpenPopover}>

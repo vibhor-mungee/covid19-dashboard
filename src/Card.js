@@ -26,25 +26,25 @@ const useStyles = makeStyles({
     },
 });
 
-function CardLayout({title,dataReport}) {
-    const colorStyle=()=>{
-        if(title==='CASES'){
-            return(
-                <h4 style={{color:'#fb756f'}}>
-                    {dataReport}
-                </h4>
-            )
-        } 
-        if(title==='DEATHS'){
-            return(
-                <h4 style={{color:'crimson'}}>
+function CardLayout({ title, dataReport }) {
+    const colorStyle = () => {
+        if (title === 'CASES') {
+            return (
+                <h4 style={{ color: '#00BCD4' }}>
                     {dataReport}
                 </h4>
             )
         }
-        if(title==='RECOVERED'){
-            return(
-                <h4  style={{color:'forestgreen'}}>
+        if (title === 'DEATHS') {
+            return (
+                <h4 style={{ color: 'crimson' }}>
+                    {dataReport}
+                </h4>
+            )
+        }
+        if (title === 'RECOVERED') {
+            return (
+                <h4 style={{ color: 'forestgreen' }}>
                     {dataReport}
                 </h4>
             )
@@ -52,7 +52,7 @@ function CardLayout({title,dataReport}) {
     }
     const classes = useStyles();
     return (
-        <Grid  item xs={4}>
+        <Grid item xs={4}>
             <Card className={classes.root}>
                 <CardContent>
                     <Typography className={classes.title} color="textSecondary" gutterBottom>
