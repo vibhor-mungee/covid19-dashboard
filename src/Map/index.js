@@ -41,7 +41,7 @@ function Index() {
   //   }
   // },[countryName,openPopup,data])
   const getCountryNameByLatLng= async(lat,lng)=>{
-    countryNameByLatLng(null)
+    // countryNameByLatLng(null)
     await request({
       url: `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyDL9qOq_Qr4kFCE651q5v5UfYGDmEEX5Oo`,
       method: 'get',
@@ -107,7 +107,10 @@ function Index() {
             hoverDistance={60}
             // onChildClick={(key,{lat,lng})=>getCountryNameByLatLng(lat,lng)}
             onChildMouseEnter={(key,{lat,lng})=>getCountryNameByLatLng(lat,lng)}
-            // onChildMouseLeave={()=>countryNameByLatLng(null)}
+            onChildMouseLeave={()=>{
+              countryNameByLatLng(null)
+              setOpenPopup(false)
+            }}
           >
             {Country.map((countryData)=>(
               <AnyReactComponent
