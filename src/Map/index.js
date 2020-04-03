@@ -87,7 +87,7 @@ function Index() {
         <h6 className="country">
           <span>{data&&data.ReportByCountry?data.ReportByCountry.country[0]:<Skeleton animation="wave" width={80} />}</span>
           </h6>
-          {data&&data.ReportByCountry?<img width={25} src={data.ReportByCountry.flag} alt={data.ReportByCountry.country[0]} />:<Skeleton variant="circle" width={40} height={40} />}
+          {data&&data.ReportByCountry?<img width={25} src={data.ReportByCountry.flag} alt={data.ReportByCountry.country[0]} />:<Skeleton variant="circle" width={45} height={45} />}
         </div>
         <div className="pop-data">
         <h6 className="confirmed">Confirmed:<span>{data&&data.ReportByCountry?data.ReportByCountry.cases:<Skeleton animation="wave" width={80} />}</span></h6>
