@@ -10,8 +10,8 @@ function App() {
   return (
     <div style={{ margin: '0px auto' }}>
       <Dashboard />
-      <Map/>
-      <div className="powered">Powered By 6DegreesIT. All rights reserved</div>
+      <Map />
+      <div className="powered">Powered By <a href="https://www.6degreesit.com">6DegreesIT</a>. All rights reserved</div>
     </div>
   );
 }
