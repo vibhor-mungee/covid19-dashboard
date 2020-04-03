@@ -6,6 +6,7 @@ import request from 'request';
 import Popover from '@material-ui/core/Popover';
 import Country from './selectedcountry';
 import location_mark from '../image/virus.svg';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 function Index() {
   const[countryName,countryNameByLatLng]= useState('India');
@@ -67,7 +68,6 @@ function Index() {
   }
   const AnyReactComponent = () => <div className="pop_div" onMouseEnter={hndlOpenPopover}>
   <div className="map-pin" ><img width={35} src={location_mark} alt="mark"/></div>
-  {data && data.ReportByCountry &&
     <Popover
     className="pop-up"
       open={openPopup}
@@ -85,18 +85,17 @@ function Index() {
     <div>
         <div className="pop-header">
         <h6 className="country">
-          <span>{data.ReportByCountry.country[0]}</span>
+          <span>{data&&data.ReportByCountry?data.ReportByCountry.country[0]:<Skeleton animation="wave" width={80} />}</span>
           </h6>
-          <img width={25} src={data.ReportByCountry.flag} alt={data.ReportByCountry.country[0]} />
+          {data&&data.ReportByCountry?<img width={25} src={data.ReportByCountry.flag} alt={data.ReportByCountry.country[0]} />:<Skeleton variant="circle" width={40} height={40} />}
         </div>
         <div className="pop-data">
-        <h6 className="confirmed">Confirmed: <span>{data.ReportByCountry.cases}</span></h6>
-        <h6 className="recovered">Recovered: <span>{data.ReportByCountry.recovered}</span></h6>
-        <h6 className="deaths">Deaths: <span>{data.ReportByCountry.deaths}</span></h6>
+        <h6 className="confirmed">Confirmed:<span>{data&&data.ReportByCountry?data.ReportByCountry.cases:<Skeleton animation="wave" width={80} />}</span></h6>
+        <h6 className="recovered">Recovered: <span>{data&&data.ReportByCountry?data.ReportByCountry.recovered:<Skeleton animation="wave" width={80} />}</span></h6>
+        <h6 className="deaths">Deaths: <span>{data&&data.ReportByCountry?data.ReportByCountry.deaths:<Skeleton animation="wave" width={80} />}</span></h6>
         </div>
       </div>
 </Popover>
-}
   </div>;
     return (
         <div style={{ height: '100vh', width: '100%' }}>

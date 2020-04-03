@@ -11,6 +11,19 @@ function App() {
     <div style={{ margin: '0px auto' }}>
       <Dashboard />
       <Map/>
+      <div style={
+        {color:'black',
+        maxWidth:'auto',
+        maxHeight:'1px',
+        textAlign:'center',
+        position:'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        zIndex:9
+  }}>Powered By 6DegreesIT. All rights reserved</div>
     </div>
   );
 }
