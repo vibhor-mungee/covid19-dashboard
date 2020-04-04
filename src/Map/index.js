@@ -1,4 +1,4 @@
-import React,{ useState } from 'react'
+import React, { useState } from 'react'
 import { useLazyQuery } from '@apollo/react-hooks';
 import gql from "graphql-tag";
 import GoogleMapReact from 'google-map-react';
@@ -9,9 +9,9 @@ import location_mark from '../image/virus.svg';
 import Skeleton from '@material-ui/lab/Skeleton';
 
 function Index() {
-  const[countryName,countryNameByLatLng]= useState('India');
-  const [openPopup,setOpenPopup]= useState(false);
-  const [anchorEl,setAnchorEl]= useState(null);
+  const [countryName, countryNameByLatLng] = useState('India');
+  const [openPopup, setOpenPopup] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
   const COVID_19_DATA = gql`
   query($country:String!){
     ReportByCountry(country:$country) {
@@ -50,16 +50,17 @@ function Index() {
     }
     );
   }
-  const hndlOpenPopover=(e)=>{
-    setAnchorEl(anchorEl?null:e.currentTarget)
+  const hndlOpenPopover = (e) => {
+    setAnchorEl(anchorEl ? null : e.currentTarget)
     reportByCountry();
     setOpenPopup(true);
   }
-  const hndlClosePopover=()=>{
+  const hndlClosePopover = () => {
     setOpenPopup(false);
   }
   const AnyReactComponent = () => <div className="pop_div" onMouseEnter={hndlOpenPopover}>
-  <div className="map-pin" ><img width={35} src={location_mark} alt="mark"/></div>
+    <div className="map-pin" ><img width={35} src={location_mark} alt="mark" /></div>
+    {data&&data.ReportByCountry &&
     <Popover
       className="pop-up"
       open={openPopup}
@@ -73,8 +74,8 @@ function Index() {
         vertical: 'bottom',
         horizontal: 'center',
       }}
->
-    <div>
+    >
+      <div>
         <div className="pop-header">
         <h6 className="country">
           <span>{data&&data.ReportByCountry?data.ReportByCountry.country[0]:<Skeleton animation="wave" width={80} />}</span>
@@ -88,32 +89,63 @@ function Index() {
         </div>
     </div>
 </Popover>
+}
+{data===undefined&&(
+  <Popover
+  className="pop-up"
+  open={openPopup}
+  onClose={hndlClosePopover}
+  // anchorEl={anchorEl}
+  anchorOrigin={{
+    vertical: 'bottom',
+    horizontal: 'center',
+  }}
+  transformOrigin={{
+    vertical: 'bottom',
+    horizontal: 'center',
+  }}
+>
+  <div>
+    <div className="pop-header">
+    <h6 className="country">
+      <span><Skeleton animation="wave" width={80} /></span>
+    </h6>
+      <Skeleton variant="circle" width={45} height={45} />
+    </div>
+    <div className="pop-data">
+      <h6 className="confirmed">Confirmed:<span><Skeleton animation="wave" width={80} /></span></h6>
+      <h6 className="recovered">Recovered: <span><Skeleton animation="wave" width={80} /></span></h6>
+      <h6 className="deaths">Deaths: <span><Skeleton animation="wave" width={80} /></span></h6>
+    </div>
+</div>
+</Popover>
+)}
   </div>;
-    return (
-        <div style={{ height: '100vh', width: '100%' }}>
-          <GoogleMapReact
-            bootstrapURLKeys={{ key: 'AIzaSyDL9qOq_Qr4kFCE651q5v5UfYGDmEEX5Oo' }}
-            defaultCenter={{lat: 20, lng: 77}}
-            defaultZoom={5}
-            hoverDistance={60}
-            // onChildClick={(key,{lat,lng})=>getCountryNameByLatLng(lat,lng)}
-            onChildMouseEnter={(key,{lat,lng})=>getCountryNameByLatLng(lat,lng)}
-            onChildMouseLeave={()=>{
-              countryNameByLatLng(null)
-              setOpenPopup(false)
-            }}
-          >
-            {Country.map((countryData)=>(
-              <AnyReactComponent
-              key={countryData.id}
-              lat={countryData.latlng[0]}
-              lng={countryData.latlng[1]}
-              countryName={countryData.name}
-            />
-            ))}
-          </GoogleMapReact>
-      </div>
-    )
+  return (
+    <div style={{ height: '100vh', width: '100%' }}>
+      <GoogleMapReact
+        bootstrapURLKeys={{ key: 'AIzaSyDL9qOq_Qr4kFCE651q5v5UfYGDmEEX5Oo' }}
+        defaultCenter={{ lat: 20, lng: 77 }}
+        defaultZoom={5}
+        hoverDistance={60}
+        // onChildClick={(key,{lat,lng})=>getCountryNameByLatLng(lat,lng)}
+        onChildMouseEnter={(key, { lat, lng }) => getCountryNameByLatLng(lat, lng)}
+        onChildMouseLeave={() => {
+          countryNameByLatLng(null)
+          setOpenPopup(false)
+        }}
+      >
+        {Country.map((countryData) => (
+          <AnyReactComponent
+            key={countryData.id}
+            lat={countryData.latlng[0]}
+            lng={countryData.latlng[1]}
+            countryName={countryData.name}
+          />
+        ))}
+      </GoogleMapReact>
+    </div>
+  )
 }
 
 export default Index
