@@ -13,7 +13,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
-  uri: 'https://thirsty-benz-671128.netlify.com/'
+  uri: 'https://naughty-hugle-534ca5.netlify.app/'
 })
 
 const client = new ApolloClient({
